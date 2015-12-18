@@ -140,7 +140,7 @@ public class WSSClient {
   private static String getListItemsRequestBody(String listDefPath, String list) {
     StringBuilder sb = new StringBuilder();
     sb.append("<ListName>" + list
-        + "</ListName><query><Query xmlns=\"\"/></query><viewFields><viewFields>");
+        + "</ListName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
     ListDef listDef = XMLParser.parseListDef(listDefPath);
     for (ListDef.Fields.Field field : listDef.getFields().getFields()) {
       if(field.getType().equalsIgnoreCase("computed")) {
@@ -148,7 +148,9 @@ public class WSSClient {
       }
       sb.append("<FieldRef Name=\"" + field.getName() + "\"/>");
     }
-    sb.append("</viewFields></viewFields>");
+    sb.append("</ViewFields></viewFields><rowLimit>50000</rowLimit>");
+    sb.append("<queryOptions><QueryOptions xmlns=\"\">" + "<DateInUtc>TRUE</DateInUtc>" + "</QueryOptions>");
+    sb.append("</queryOptions>");
     return sb.toString();
   }
 
