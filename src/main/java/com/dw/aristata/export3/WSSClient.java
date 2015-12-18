@@ -150,7 +150,7 @@ public class WSSClient {
 
       sb.append("<FieldRef Name=\"" + field.getName() + "\"/>");
     }
-    sb.append("</ViewFields></viewFields><rowLimit>50</rowLimit>");
+    sb.append("</ViewFields></viewFields><rowLimit>50000</rowLimit>");
     sb.append("<queryOptions><QueryOptions xmlns=\"\">" + "<DateInUtc>TRUE</DateInUtc>"
         + "</QueryOptions>");
     sb.append("</queryOptions>");
