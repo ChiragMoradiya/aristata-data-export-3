@@ -150,7 +150,7 @@ public class WSSClient {
       
       if(field.getType().equalsIgnoreCase("Lookup")) {
         lookupCount ++;
-        if(lookupCount >= 8) {
+        if(lookupCount >= 4) {
           continue;
         }
       }
