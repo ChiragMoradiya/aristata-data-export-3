@@ -155,6 +155,10 @@ public class WSSClient {
 //          continue;
 //        }
 //      }
+      
+      if(field.getName().startsWith("_")) {
+        continue;
+      }
       counter ++ ;
       if(counter > 10) {
         continue;
