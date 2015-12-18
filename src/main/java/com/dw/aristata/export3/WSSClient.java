@@ -142,26 +142,9 @@ public class WSSClient {
     sb.append("<listName>" + list
         + "</listName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
     ListDef listDef = XMLParser.parseListDef(listDefPath);
-    // int lookupCount = 0;
-    int counter = 0;
     for (ListDef.Fields.Field field : listDef.getFields().getFields()) {
       if (field.getType().equalsIgnoreCase("computed")
           || field.getType().equalsIgnoreCase("Attachments")) {
-        continue;
-      }
-
-      // if(field.getType().equalsIgnoreCase("Lookup")) {
-      // lookupCount ++;
-      // if(lookupCount >= 4) {
-      // continue;
-      // }
-      // }
-
-      if (field.getName().startsWith("_")) {
-        continue;
-      }
-      counter++;
-      if (counter > 10) {
         continue;
       }
 
