@@ -145,7 +145,7 @@ public class WSSClient {
 //    int lookupCount = 0;
     int counter = 0;
     for (ListDef.Fields.Field field : listDef.getFields().getFields()) {
-      if(field.getType().equalsIgnoreCase("computed")) {
+      if(field.getType().equalsIgnoreCase("computed") || field.getType().equalsIgnoreCase("Attachments")) {
         continue;
       }
       

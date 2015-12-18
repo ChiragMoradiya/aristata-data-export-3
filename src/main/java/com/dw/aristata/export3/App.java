@@ -10,9 +10,9 @@ import com.dw.aristata.export3.dto.ListDef;
 public class App {
   public static void main(String[] args) {
     WSSClient wssClient = new WSSClient();
-    wssClient.writeListAndView(null, "UserInfo", "C:\\aristata-export\\master\\UserInfo-def.xml");
-    wssClient.writeListItems("C:\\aristata-export\\master\\UserInfo-def.xml", null, "UserInfo",
-        "C:\\aristata-export\\master\\UserInfo-data.xml");
+    wssClient.writeListAndView(null, "Families", "C:\\aristata-export\\master\\Families-def.xml");
+    wssClient.writeListItems("C:\\aristata-export\\master\\Families-def.xml", null, "Families",
+        "C:\\aristata-export\\master\\Families-data.xml");
     listDefinitionTest();
     // listCollectionTest();
   }
@@ -20,6 +20,9 @@ public class App {
   private static void listDefinitionTest() {
     ListDef listDefinition = XMLParser.parseListDef("D:\\tmp-test\\UserInfo.xml");
     for (ListDef.Fields.Field f : listDefinition.getFields().getFields()) {
+      if(f.getType().equalsIgnoreCase("computed")) {
+        continue;
+      }
       System.out.println(f.getName() + "|" + f.getDisplayName() + "|" + f.getType());
     }
   }
