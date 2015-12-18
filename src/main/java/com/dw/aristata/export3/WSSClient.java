@@ -64,8 +64,7 @@ public class WSSClient {
   }
 
   public void writeListItems(String listDefLoc, String family, String list, String location) {
-//    String reqBody = getListItemsRequestBody(listDefLoc, list);
-    String reqBody = getEntitiesDataRequestBody();
+    String reqBody = getListItemsRequestBody(listDefLoc, list);
     executeRequest(family, "GetListItems", reqBody, location);
   }
 
@@ -140,8 +139,8 @@ public class WSSClient {
 
   public static String getListItemsRequestBody(String listDefPath, String list) {
     StringBuilder sb = new StringBuilder();
-    sb.append("<ListName>" + list
-        + "</ListName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
+    sb.append("<listName>" + list
+        + "</listName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
     ListDef listDef = XMLParser.parseListDef(listDefPath);
     // int lookupCount = 0;
     int counter = 0;
@@ -176,47 +175,47 @@ public class WSSClient {
   }
 
 
-  private static String getEntitiesDataRequestBody() {
-   String requestBody = ""
-//   + "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-//   + "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
-//   + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\""
-//   + "  xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
-//   + "<soap:Body>" + " <GetListItems xmlns=\"http://schemas.microsoft.com/sharepoint/soap/\">"
-//   + "<listName>e6f2230a-edb4-4677-b730-e6cf7281fd2e</listName>"
-//   + "<viewName>0349a7be-90ae-4c0f-b081-bb5289a4fe8b</viewName>" 
-+ "<listName>Entities</listName>"
-   + "<query>"
-   + " <Query xmlns=\"\"/>" + "</query>" + "<viewFields>" + "<ViewFields>" + "<FieldRef "
-   + "Name=\"ID\"/>" + "<FieldRef " + "Name=\"_ModerationStatus\"/>" + "<FieldRef "
-   + "Name=\"_ModerationComments\"/>" + "<FieldRef " + " Name=\"AristataEntityFolder\"/>"
-   + "<FieldRef " + " Name=\"AristataAssocMgr1\"/>" + "<FieldRef "
-   + "Name=\"AristataAssocMgr2\"/>" + "<FieldRef " + " Name=\"AristataAssocMgr3\"/>"
-   + "<FieldRef " + "Name=\"AristataAssocMgr4\"/>" + "<FieldRef "
-   + "Name=\"AristataAssocSLEntities\"/>" + "<FieldRef " + "Name=\"Attachments\"/>"
-   + "<FieldRef " + "Name=\"AristataSLCompany\"/>" + "<FieldRef "
-   + "Name=\"AristataSLContact\"/>" + "<FieldRef " + "Name=\"ContentType\"/>" + "<FieldRef "
-   + "Name=\"ContentTypeId\"/>" + "<FieldRef " + "Name=\"_CopySource\"/>" + "<FieldRef "
-   + "Name=\"Created\"/>" + "<FieldRef " + "Name=\"Author\"/>" + "<FieldRef "
-   + "Name=\"EncodedAbsUrl\"/>" + "<FieldRef " + "Name=\"AristataSLFamily\"/>" + "<FieldRef "
-   + "Name=\"File_x0020_Type\"/>" + "<FieldRef " + "Name=\"GUID\"/>" + "<FieldRef "
-   + "Name=\"_HasCopyDestinations\"/>" + "<FieldRef " + "Name=\"InstanceID\"/>" + "<FieldRef "
-   + "Name=\"_IsCurrentVersion\"/>" + "<FieldRef " + "Name=\"_Level\"/>" + "<FieldRef "
-   + "Name=\"Modified\"/>" + "<FieldRef " + "Name=\"Editor\"/>" + "<FieldRef "
-   + "Name=\"FileLeafRef\"/>" + "<FieldRef " + "Name=\"Order\"/>" + "<FieldRef "
-   + "Name=\"owshiddenversion\"/>" + "<FieldRef " + "Name=\"FileDirRef\"/>" + "<FieldRef "
-   + "Name=\"AristataRelationshipMgr\"/>" + "<FieldRef " + "Name=\"Title\"/>" + "<FieldRef "
-   + "Name=\"AristataCLEntityType\"/>" + "<FieldRef " + "Name=\"_UIVersion\"/>" + "<FieldRef "
-   + "Name=\"FileRef\"/>" + "<FieldRef " + "Name=\"_UIVersionString\"/>" + "<FieldRef "
-   + "Name=\"WorkflowInstanceID\"/>" + "<FieldRef " + "Name=\"WorkflowVersion\"/>"
-   + "</ViewFields>" + "</viewFields>" + "<rowLimit>5000</rowLimit>" + "<queryOptions>"
-   + "<QueryOptions xmlns=\"\">" + "<DateInUtc>TRUE</DateInUtc>" + "</QueryOptions>"
-   + "</queryOptions>";
-//   + "<webID>3fbe3ea8-1a93-43c5-810d-e72bba19aa8f</webID>"
-//   + "</GetListItems>" + "</soap:Body>" + "</soap:Envelope>";
-  
-   return requestBody;
-  
-   }
+//  private static String getEntitiesDataRequestBody() {
+//   String requestBody = ""
+////   + "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+////   + "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+////   + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\""
+////   + "  xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"
+////   + "<soap:Body>" + " <GetListItems xmlns=\"http://schemas.microsoft.com/sharepoint/soap/\">"
+////   + "<listName>e6f2230a-edb4-4677-b730-e6cf7281fd2e</listName>"
+////   + "<viewName>0349a7be-90ae-4c0f-b081-bb5289a4fe8b</viewName>" 
+//+ "<listName>Entities</listName>"
+//   + "<query>"
+//   + " <Query xmlns=\"\"/>" + "</query>" + "<viewFields>" + "<ViewFields>" + "<FieldRef "
+//   + "Name=\"ID\"/>" + "<FieldRef " + "Name=\"_ModerationStatus\"/>" + "<FieldRef "
+//   + "Name=\"_ModerationComments\"/>" + "<FieldRef " + " Name=\"AristataEntityFolder\"/>"
+//   + "<FieldRef " + " Name=\"AristataAssocMgr1\"/>" + "<FieldRef "
+//   + "Name=\"AristataAssocMgr2\"/>" + "<FieldRef " + " Name=\"AristataAssocMgr3\"/>"
+//   + "<FieldRef " + "Name=\"AristataAssocMgr4\"/>" + "<FieldRef "
+//   + "Name=\"AristataAssocSLEntities\"/>" + "<FieldRef " + "Name=\"Attachments\"/>"
+//   + "<FieldRef " + "Name=\"AristataSLCompany\"/>" + "<FieldRef "
+//   + "Name=\"AristataSLContact\"/>" + "<FieldRef " + "Name=\"ContentType\"/>" + "<FieldRef "
+//   + "Name=\"ContentTypeId\"/>" + "<FieldRef " + "Name=\"_CopySource\"/>" + "<FieldRef "
+//   + "Name=\"Created\"/>" + "<FieldRef " + "Name=\"Author\"/>" + "<FieldRef "
+//   + "Name=\"EncodedAbsUrl\"/>" + "<FieldRef " + "Name=\"AristataSLFamily\"/>" + "<FieldRef "
+//   + "Name=\"File_x0020_Type\"/>" + "<FieldRef " + "Name=\"GUID\"/>" + "<FieldRef "
+//   + "Name=\"_HasCopyDestinations\"/>" + "<FieldRef " + "Name=\"InstanceID\"/>" + "<FieldRef "
+//   + "Name=\"_IsCurrentVersion\"/>" + "<FieldRef " + "Name=\"_Level\"/>" + "<FieldRef "
+//   + "Name=\"Modified\"/>" + "<FieldRef " + "Name=\"Editor\"/>" + "<FieldRef "
+//   + "Name=\"FileLeafRef\"/>" + "<FieldRef " + "Name=\"Order\"/>" + "<FieldRef "
+//   + "Name=\"owshiddenversion\"/>" + "<FieldRef " + "Name=\"FileDirRef\"/>" + "<FieldRef "
+//   + "Name=\"AristataRelationshipMgr\"/>" + "<FieldRef " + "Name=\"Title\"/>" + "<FieldRef "
+//   + "Name=\"AristataCLEntityType\"/>" + "<FieldRef " + "Name=\"_UIVersion\"/>" + "<FieldRef "
+//   + "Name=\"FileRef\"/>" + "<FieldRef " + "Name=\"_UIVersionString\"/>" + "<FieldRef "
+//   + "Name=\"WorkflowInstanceID\"/>" + "<FieldRef " + "Name=\"WorkflowVersion\"/>"
+//   + "</ViewFields>" + "</viewFields>" + "<rowLimit>5000</rowLimit>" + "<queryOptions>"
+//   + "<QueryOptions xmlns=\"\">" + "<DateInUtc>TRUE</DateInUtc>" + "</QueryOptions>"
+//   + "</queryOptions>";
+////   + "<webID>3fbe3ea8-1a93-43c5-810d-e72bba19aa8f</webID>"
+////   + "</GetListItems>" + "</soap:Body>" + "</soap:Envelope>";
+//  
+//   return requestBody;
+//  
+//   }
 
 }
