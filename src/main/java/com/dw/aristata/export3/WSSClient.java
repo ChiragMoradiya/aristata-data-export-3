@@ -137,7 +137,7 @@ public class WSSClient {
     return "http://schemas.microsoft.com/sharepoint/soap/" + method;
   }
 
-  private static String getListItemsRequestBody(String listDefPath, String list) {
+  public static String getListItemsRequestBody(String listDefPath, String list) {
     StringBuilder sb = new StringBuilder();
     sb.append("<ListName>" + list
         + "</ListName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
@@ -148,7 +148,7 @@ public class WSSClient {
         continue;
       }
       
-      if(field.getType().equals("lookup")) {
+      if(field.getType().equalsIgnoreCase("Lookup")) {
         lookupCount ++;
         if(lookupCount >= 8) {
           continue;
