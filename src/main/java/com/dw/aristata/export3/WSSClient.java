@@ -143,6 +143,9 @@ public class WSSClient {
         + "</ListName><query><Query xmlns=\"\"/></query><viewFields><viewFields>");
     ListDef listDef = XMLParser.parseListDef(listDefPath);
     for (ListDef.Fields.Field field : listDef.getFields().getFields()) {
+      if(field.getType().equalsIgnoreCase("computed")) {
+        continue;
+      }
       sb.append("<FieldRef Name=\"" + field.getName() + "\"/>");
     }
     sb.append("</viewFields></viewFields>");
