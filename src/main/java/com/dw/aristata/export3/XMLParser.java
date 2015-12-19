@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import com.dw.aristata.export3.dto.FamiliesListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
 
@@ -36,13 +37,17 @@ public class XMLParser {
       throw new RuntimeException("failed to parseXML", e);
     }
   }
-  
+
   public static ListDef parseListDef(String fileLoc) {
     return parseXML(fileLoc, "//List", ListDef.class);
   }
-  
+
   public static ListCollectionResult parseListCollection(String fileLoc) {
     return parseXML(fileLoc, "//GetListCollectionResult", ListCollectionResult.class);
+  }
+
+  public static FamiliesListItems parseFamiliesListItems(String fileLoc) {
+    return parseXML(fileLoc, "//listitems", FamiliesListItems.class);
   }
 
 }
