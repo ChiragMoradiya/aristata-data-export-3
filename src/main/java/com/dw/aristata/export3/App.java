@@ -18,7 +18,7 @@ public class App {
     for (String family : getFamilies()) {
       exportData(family);
       counter++;
-      if (counter > 1) {
+      if (counter >= 1) {
         break;
       }
     }
