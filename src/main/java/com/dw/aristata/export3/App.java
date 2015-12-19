@@ -32,14 +32,14 @@ public class App {
   private static void exportData(String family) {
     WSSClient wssClient = new WSSClient();
     String folder = family == null ? "master" : family;
-    wssClient.writeListCollection(null, "C:\\aristata-export\\" + folder + "\\Lists.xml");
+    wssClient.writeListCollection(family, "C:\\aristata-export\\" + folder + "\\Lists.xml");
     ListCollectionResult listCollection =
         XMLParser.parseListCollection("C:\\aristata-export\\" + folder + "\\Lists.xml");
     for (ListCollectionResult.Lists.List list : listCollection.getLists().getLists()) {
       String defFileLoc = "C:\\aristata-export\\" + folder + "\\" + list.getTitle() + "-def.xml";
       String dataFileLoc = "C:\\aristata-export\\" + folder + "\\" + list.getTitle() + "-data.xml";
-      wssClient.writeListAndView(null, list.getTitle(), defFileLoc);
-      wssClient.writeListItems(defFileLoc, null, list.getTitle(), dataFileLoc);
+      wssClient.writeListAndView(family, list.getTitle(), defFileLoc);
+      wssClient.writeListItems(defFileLoc, family, list.getTitle(), dataFileLoc);
     }
   }
 
