@@ -13,15 +13,14 @@ import com.dw.aristata.export3.dto.ListDef;
  */
 public class App {
   public static void main(String[] args) {
+    long startTime = System.currentTimeMillis();
     exportData(null); // Export master data.
-    int counter = 0;
     for (String family : getFamilies()) {
       exportData(family);
-      counter++;
-      if (counter >= 1) {
-        break;
-      }
     }
+    long endTime = System.currentTimeMillis();
+    long duration = (endTime - startTime)/1000;
+    System.out.println("Execution duration: " + duration);
 
     // listDefinitionTest();
     // listCollectionTest();
