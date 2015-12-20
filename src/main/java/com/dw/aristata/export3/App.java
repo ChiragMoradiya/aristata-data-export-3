@@ -13,15 +13,15 @@ import com.dw.aristata.export3.dto.ListDef;
  */
 public class App {
   public static void main(String[] args) {
-    exportData("_aristata"); // Export master data.
-//    int counter = 0;
-//    for (String family : getFamilies()) {
-//      exportData(family);
-//      counter++;
-//      if (counter >= 1) {
-//        break;
-//      }
-//    }
+    exportData(null); // Export master data.
+    int counter = 0;
+    for (String family : getFamilies()) {
+      exportData(family);
+      counter++;
+      if (counter >= 1) {
+        break;
+      }
+    }
 
     // listDefinitionTest();
     // listCollectionTest();

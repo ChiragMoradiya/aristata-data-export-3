@@ -140,7 +140,7 @@ public class WSSClient {
   public static String getListItemsRequestBody(String listDefPath, String list) {
     StringBuilder sb = new StringBuilder();
     sb.append("<listName>" + list
-        + "</listName><query><Query xmlns=\"\"/></query><viewFields><ViewFields>");
+        + "</listName><query><Query Scope=\"RecursiveAll\"/></query><viewFields><ViewFields>");
     ListDef listDef = XMLParser.parseListDef(listDefPath);
     for (ListDef.Fields.Field field : listDef.getFields().getFields()) {
       if (field.getType().equalsIgnoreCase("computed")
@@ -150,8 +150,10 @@ public class WSSClient {
 
       sb.append("<FieldRef Name=\"" + field.getName() + "\"/>");
     }
-    sb.append("</ViewFields></viewFields><rowLimit>50000</rowLimit>");
-    sb.append("<queryOptions><QueryOptions xmlns=\"\">" + "<DateInUtc>TRUE</DateInUtc>"
+    sb.append("</ViewFields></viewFields><rowLimit>100000</rowLimit>");
+    sb.append("<queryOptions><QueryOptions xmlns=\"\">"
+        + "<DateInUtc>TRUE</DateInUtc>"
+        + "<ViewAttributes Scope='RecursiveAll' IncludeRootFolder='True' />"
         + "</QueryOptions>");
     sb.append("</queryOptions>");
     return sb.toString();
