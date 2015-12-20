@@ -16,7 +16,12 @@ public class App {
     long startTime = System.currentTimeMillis();
     exportData(null); // Export master data.
     for (String family : getFamilies()) {
-      exportData(family);
+      try {
+        exportData(family);
+      } catch (Exception e) {
+        System.err.println("Failed to export family : " + family);
+        e.printStackTrace();
+      }
     }
     long endTime = System.currentTimeMillis();
     long duration = (endTime - startTime)/1000;
@@ -47,7 +52,7 @@ public class App {
         XMLParser.parseFamiliesListItems("C:\\aristata-export\\master\\Families-data.xml");
     List<String> familyTitles = new ArrayList<String>();
     for (FamiliesListItems.Row row : data.getRows()) {
-      familyTitles.add(row.getTitle());
+      familyTitles.add(row.getWebURL());
     }
     return familyTitles;
   }
