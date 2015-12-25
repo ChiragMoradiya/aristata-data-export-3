@@ -1,12 +1,21 @@
 package com.dw.aristata.export3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.dw.aristata.export3.dto.Family;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
+
+import rx.Observer;
+import rx.Scheduler;
+import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaSchedulersHook;
+import rx.schedulers.Schedulers;
 
 /**
  * Hello world!
@@ -31,7 +40,9 @@ public class App {
 //     listDefinitionTest();
 //     listCollectionTest();
 
-     familiesListItemsTest();
+//     familiesListItemsTest();
+    
+    testUsersMigrator();
   }
 
   private static void exportData(String family) {
@@ -74,12 +85,52 @@ public class App {
     System.out.println(result.getLists().getLists().get(0).getName());
     System.out.println(result.getLists().getLists().get(0).getTitle());
   }
+  
+  private static void testUsersMigrator() {
+    MyRxJavaSchedulersHook hook = new MyRxJavaSchedulersHook();
+    
+    RxJavaPlugins.getInstance().registerSchedulersHook(hook);
+    
+    new UsersMigrator().toObservable()
+    .subscribe(new Observer() {
+      @Override
+      public void onCompleted() {
+        System.out.println(Thread.currentThread().getName() + " onCompleted invoked");
+      }
+      
+      @Override
+      public void onError(Throwable arg0) {
+        System.out.println(Thread.currentThread().getName() + " onError invoked" + arg0);
+      }
+      
+      @Override
+      public void onNext(Object arg0) {
+        System.out.println(Thread.currentThread().getName() + " onNext invoked" + arg0);
+      }
+    });
+    
+  }
 
   private static void familiesListItemsTest() {
     FamilyListItems familiesData =
         XMLParser.parseFamiliesListItems("D:\\tmp-test\\master\\Families-data.xml");
     for (Family row : familiesData.getRows()) {
       System.out.println(row.getTitle());
+    }
+  }
+  
+  
+  private static class MyRxJavaSchedulersHook extends RxJavaSchedulersHook {
+    ExecutorService executor;
+    @Override
+    public Scheduler getComputationScheduler() {
+      System.out.println("getComputationScheduler invoked");
+       executor = Executors.newFixedThreadPool(15);
+       return Schedulers.from(executor);
+    }
+    
+    public void shutDown() {
+      executor.shutdown();
     }
   }
 }
