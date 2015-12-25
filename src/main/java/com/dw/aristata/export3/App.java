@@ -3,7 +3,8 @@ package com.dw.aristata.export3;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dw.aristata.export3.dto.FamiliesListItems;
+import com.dw.aristata.export3.dto.Family;
+import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
 
@@ -13,24 +14,24 @@ import com.dw.aristata.export3.dto.ListDef;
  */
 public class App {
   public static void main(String[] args) {
-    long startTime = System.currentTimeMillis();
-    exportData(null); // Export master data.
-    for (String family : getFamilies()) {
-      try {
-        exportData(family);
-      } catch (Exception e) {
-        System.err.println("Failed to export family : " + family);
-        e.printStackTrace();
-      }
-    }
-    long endTime = System.currentTimeMillis();
-    long duration = (endTime - startTime)/1000;
-    System.out.println("Execution duration: " + duration);
+//    long startTime = System.currentTimeMillis();
+//    exportData(null); // Export master data.
+//    for (String family : getFamilies()) {
+//      try {
+//        exportData(family);
+//      } catch (Exception e) {
+//        System.err.println("Failed to export family : " + family);
+//        e.printStackTrace();
+//      }
+//    }
+//    long endTime = System.currentTimeMillis();
+//    long duration = (endTime - startTime)/1000;
+//    System.out.println("Execution duration: " + duration);
 
-    // listDefinitionTest();
-    // listCollectionTest();
+//     listDefinitionTest();
+//     listCollectionTest();
 
-    // familiesListItemsTest();
+     familiesListItemsTest();
   }
 
   private static void exportData(String family) {
@@ -48,10 +49,10 @@ public class App {
   }
 
   private static List<String> getFamilies() {
-    FamiliesListItems data =
+    FamilyListItems data =
         XMLParser.parseFamiliesListItems("C:\\aristata-export\\master\\Families-data.xml");
     List<String> familyTitles = new ArrayList<String>();
-    for (FamiliesListItems.Row row : data.getRows()) {
+    for (Family row : data.getRows()) {
       familyTitles.add(row.getWebURL());
     }
     return familyTitles;
@@ -75,9 +76,9 @@ public class App {
   }
 
   private static void familiesListItemsTest() {
-    FamiliesListItems familiesData =
+    FamilyListItems familiesData =
         XMLParser.parseFamiliesListItems("D:\\tmp-test\\master\\Families-data.xml");
-    for (FamiliesListItems.Row row : familiesData.getRows()) {
+    for (Family row : familiesData.getRows()) {
       System.out.println(row.getTitle());
     }
   }
