@@ -2,11 +2,14 @@ package com.dw.aristata.export3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 import com.dw.aristata.export3.dto.Family;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
+import com.dw.aristata.export3.dto.TaxSection;
+import com.dw.aristata.export3.dto.TaxSectionListItems;
 
 /**
  * Hello world!
@@ -31,7 +34,9 @@ public class App {
 //     listDefinitionTest();
 //     listCollectionTest();
 
-     familiesListItemsTest();
+//     familiesListItemsTest();
+     
+     taxSectionsTest();
   }
 
   private static void exportData(String family) {
@@ -80,6 +85,16 @@ public class App {
         XMLParser.parseFamiliesListItems("D:\\tmp-test\\master\\Families-data.xml");
     for (Family row : familiesData.getRows()) {
       System.out.println(row.getTitle());
+    }
+  }
+  
+  private static void taxSectionsTest() {
+    TaxSectionListItems taxSectionItems =
+        XMLParser.parseTaxSections("D:\\tmp-test\\master\\Tax Sections-data.xml");
+    TreeSet<TaxSection> set = new TreeSet<>();
+    set.addAll(taxSectionItems.getRows());
+    for (TaxSection row : set) {
+      System.out.println(row.getTitle() );
     }
   }
 }

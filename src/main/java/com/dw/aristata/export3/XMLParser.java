@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
+import com.dw.aristata.export3.dto.TaxSectionListItems;
 
 public class XMLParser {
   public static <T> T parseXML(String fileLoc, String rootXPath, Class<T> clazz) {
@@ -48,6 +49,10 @@ public class XMLParser {
 
   public static FamilyListItems parseFamiliesListItems(String fileLoc) {
     return parseXML(fileLoc, "//listitems", FamilyListItems.class);
+  }
+  
+  public static TaxSectionListItems parseTaxSections(String fileLoc) {
+    return parseXML(fileLoc, "//listitems", TaxSectionListItems.class);
   }
 
 }
