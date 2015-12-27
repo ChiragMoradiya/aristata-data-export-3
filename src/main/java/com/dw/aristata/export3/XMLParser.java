@@ -25,11 +25,10 @@ public class XMLParser {
 
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
-      Document doc = builder.parse(file);
       XPath xPath = XPathFactory.newInstance().newXPath();
+      
+      Document doc = builder.parse(file);
       Node node = (Node) xPath.compile(rootXPath).evaluate(doc, XPathConstants.NODE);
-      String parentNodeName = node.getParentNode().getNodeName();
-      System.out.println(parentNodeName);
       JAXBContext jc = JAXBContext.newInstance(clazz);
       Unmarshaller u = jc.createUnmarshaller();
       T result = (T) u.unmarshal(node);
