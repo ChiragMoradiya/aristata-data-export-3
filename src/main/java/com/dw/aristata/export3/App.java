@@ -2,6 +2,7 @@ package com.dw.aristata.export3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,26 +24,27 @@ import rx.schedulers.Schedulers;
  */
 public class App {
   public static void main(String[] args) {
-//    long startTime = System.currentTimeMillis();
-//    exportData(null); // Export master data.
-//    for (String family : getFamilies()) {
-//      try {
-//        exportData(family);
-//      } catch (Exception e) {
-//        System.err.println("Failed to export family : " + family);
-//        e.printStackTrace();
-//      }
-//    }
-//    long endTime = System.currentTimeMillis();
-//    long duration = (endTime - startTime)/1000;
-//    System.out.println("Execution duration: " + duration);
+    // long startTime = System.currentTimeMillis();
+    // exportData(null); // Export master data.
+    // for (String family : getFamilies()) {
+    // try {
+    // exportData(family);
+    // } catch (Exception e) {
+    // System.err.println("Failed to export family : " + family);
+    // e.printStackTrace();
+    // }
+    // }
+    // long endTime = System.currentTimeMillis();
+    // long duration = (endTime - startTime)/1000;
+    // System.out.println("Execution duration: " + duration);
 
-//     listDefinitionTest();
-//     listCollectionTest();
+    // listDefinitionTest();
+    // listCollectionTest();
 
-//     familiesListItemsTest();
-    
-    testUsersMigrator();
+    // familiesListItemsTest();
+
+    // testUsersMigrator();
+    blockingRxTest();
   }
 
   private static void exportData(String family) {
@@ -85,30 +87,29 @@ public class App {
     System.out.println(result.getLists().getLists().get(0).getName());
     System.out.println(result.getLists().getLists().get(0).getTitle());
   }
-  
+
   private static void testUsersMigrator() {
     MyRxJavaSchedulersHook hook = new MyRxJavaSchedulersHook();
-    
+
     RxJavaPlugins.getInstance().registerSchedulersHook(hook);
-    
-    new UsersMigrator().toObservable()
-    .subscribe(new Observer() {
+
+    new UsersMigrator().toObservable().subscribe(new Observer() {
       @Override
       public void onCompleted() {
         System.out.println(Thread.currentThread().getName() + " onCompleted invoked");
       }
-      
+
       @Override
       public void onError(Throwable arg0) {
         System.out.println(Thread.currentThread().getName() + " onError invoked" + arg0);
       }
-      
+
       @Override
       public void onNext(Object arg0) {
         System.out.println(Thread.currentThread().getName() + " onNext invoked" + arg0);
       }
     });
-    
+
   }
 
   private static void familiesListItemsTest() {
@@ -118,19 +119,35 @@ public class App {
       System.out.println(row.getTitle());
     }
   }
-  
-  
+
+
   private static class MyRxJavaSchedulersHook extends RxJavaSchedulersHook {
     ExecutorService executor;
+
     @Override
     public Scheduler getComputationScheduler() {
       System.out.println("getComputationScheduler invoked");
-       executor = Executors.newFixedThreadPool(15);
-       return Schedulers.from(executor);
+      executor = Executors.newFixedThreadPool(15);
+      return Schedulers.from(executor);
     }
-    
+
     public void shutDown() {
       executor.shutdown();
     }
+  }
+
+  private static void blockingRxTest() {
+    MyRxJavaSchedulersHook hook = new MyRxJavaSchedulersHook();
+
+    RxJavaPlugins.getInstance().registerSchedulersHook(hook);
+
+    MastersJob mastersJob = new MastersJob();
+    mastersJob.toObservable().toBlocking().last();
+    List<String> families = Arrays.asList("family1", "family2", "family3", "family4");
+    for (String family : families) {
+      FamilyJob familyJob = new FamilyJob(family);
+      familyJob.toObservable().toBlocking().last();
+    }
+
   }
 }
