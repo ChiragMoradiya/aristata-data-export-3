@@ -91,6 +91,16 @@ public class App {
   }
   
   private static void taxSectionsTest() {
+    TaxSectionListItems taxSectionListItems =
+        XMLParser.parseTaxSections("D:\\tmp-test\\master\\Tax Sections-data.xml");
+    TreeSet<TaxSection> set = new TreeSet<>();
+    set.addAll(taxSectionListItems.getRows());
+    for (TaxSection row : set) {
+      System.out.println(row.toString());
+    }
+  }
+  
+  private static void taxDocumentsTest() {
     TaxDocumentListItems taxDocumentItems =
         XMLParser.parseTaxDocuments("D:\\tmp-test\\master\\Tax Documents-data.xml");
     TreeSet<TaxDocument> set = new TreeSet<>();

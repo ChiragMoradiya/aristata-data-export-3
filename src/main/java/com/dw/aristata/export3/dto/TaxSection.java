@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 public class TaxSection implements Comparable<TaxSection> {
   private String title;
+  private String taxForm;
 
   private double order;
 
@@ -24,13 +25,34 @@ public class TaxSection implements Comparable<TaxSection> {
   public void setOrder(double order) {
     this.order = order;
   }
+  
+  public String getTaxForm() {
+    return taxForm;
+  }
+  
+  @XmlAttribute(name = "ows_AristataTaxReturnType")
+  public void setTaxForm(String taxForm) {
+    this.taxForm = taxForm;
+  }
+  
 
   @Override
   public int compareTo(TaxSection o) {
-    if (o.getOrder() - this.getOrder() < 0) {
-      return 1;
-    };
+    int value = this.getTaxForm().compareTo(o.getTaxForm());
+    if (value == 0) {
+      value = (int) (this.getOrder() - o.getOrder());
+    }
 
-    return (o.getOrder() - this.getOrder() == 0) ? 0 : -1;
+    if (value == 0) {
+      value = this.getTitle().compareTo(o.getTitle());
+    }
+
+    return value;
   }
+  
+  @Override
+  public String toString() {
+    return getTaxForm() + "|" + getOrder() + "|" + getTitle();
+  }
+  
 }
