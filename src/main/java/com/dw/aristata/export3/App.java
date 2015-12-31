@@ -8,6 +8,8 @@ import com.dw.aristata.export3.dto.Family;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
+import com.dw.aristata.export3.dto.TaxDocument;
+import com.dw.aristata.export3.dto.TaxDocumentListItems;
 import com.dw.aristata.export3.dto.TaxSection;
 import com.dw.aristata.export3.dto.TaxSectionListItems;
 
@@ -89,12 +91,12 @@ public class App {
   }
   
   private static void taxSectionsTest() {
-    TaxSectionListItems taxSectionItems =
-        XMLParser.parseTaxSections("D:\\tmp-test\\master\\Tax Sections-data.xml");
-    TreeSet<TaxSection> set = new TreeSet<>();
-    set.addAll(taxSectionItems.getRows());
-    for (TaxSection row : set) {
-      System.out.println(row.getTitle() );
+    TaxDocumentListItems taxDocumentItems =
+        XMLParser.parseTaxDocuments("D:\\tmp-test\\master\\Tax Documents-data.xml");
+    TreeSet<TaxDocument> set = new TreeSet<>();
+    set.addAll(taxDocumentItems.getRows());
+    for (TaxDocument row : set) {
+      System.out.println(row.toString());
     }
   }
 }
