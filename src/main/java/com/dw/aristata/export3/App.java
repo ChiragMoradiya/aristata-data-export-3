@@ -1,9 +1,13 @@
 package com.dw.aristata.export3;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
+import com.dw.aristata.export3.dto.Asset;
+import com.dw.aristata.export3.dto.AssetListItems;
 import com.dw.aristata.export3.dto.Family;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
@@ -19,26 +23,26 @@ import com.dw.aristata.export3.dto.TaxSectionListItems;
  */
 public class App {
   public static void main(String[] args) {
-//    long startTime = System.currentTimeMillis();
-//    exportData(null); // Export master data.
-//    for (String family : getFamilies()) {
-//      try {
-//        exportData(family);
-//      } catch (Exception e) {
-//        System.err.println("Failed to export family : " + family);
-//        e.printStackTrace();
-//      }
-//    }
-//    long endTime = System.currentTimeMillis();
-//    long duration = (endTime - startTime)/1000;
-//    System.out.println("Execution duration: " + duration);
+    // long startTime = System.currentTimeMillis();
+    // exportData(null); // Export master data.
+    // for (String family : getFamilies()) {
+    // try {
+    // exportData(family);
+    // } catch (Exception e) {
+    // System.err.println("Failed to export family : " + family);
+    // e.printStackTrace();
+    // }
+    // }
+    // long endTime = System.currentTimeMillis();
+    // long duration = (endTime - startTime)/1000;
+    // System.out.println("Execution duration: " + duration);
 
-//     listDefinitionTest();
-//     listCollectionTest();
+    // listDefinitionTest();
+    // listCollectionTest();
 
-//     familiesListItemsTest();
-     
-     taxSectionsTest();
+    // familiesListItemsTest();
+
+    assetTypeAndSubTypesTest();
   }
 
   private static void exportData(String family) {
@@ -89,7 +93,7 @@ public class App {
       System.out.println(row.getTitle());
     }
   }
-  
+
   private static void taxSectionsTest() {
     TaxSectionListItems taxSectionListItems =
         XMLParser.parseTaxSections("D:\\tmp-test\\master\\Tax Sections-data.xml");
@@ -99,7 +103,7 @@ public class App {
       System.out.println(row.toString());
     }
   }
-  
+
   private static void taxDocumentsTest() {
     TaxDocumentListItems taxDocumentItems =
         XMLParser.parseTaxDocuments("D:\\tmp-test\\master\\Tax Documents-data.xml");
@@ -107,6 +111,33 @@ public class App {
     set.addAll(taxDocumentItems.getRows());
     for (TaxDocument row : set) {
       System.out.println(row.toString());
+    }
+  }
+
+
+  private static void assetTypeAndSubTypesTest() {
+    File file = new File("D:\\aristata-export");
+    File files[] = file.listFiles();
+    TreeSet<Asset> set = new TreeSet<>();
+    for (File f : files) {
+      if (f.getName().equals("master"))
+        continue;
+      AssetListItems assetListItems =
+          XMLParser.parseAssets(f.getAbsolutePath() + "\\Assets-data.xml");
+      addAssetsTo(assetListItems, set);
+      
+    }
+    for (Asset row : set) {
+      System.out.println(row.toString());
+    }
+
+  }
+
+  private static void addAssetsTo(AssetListItems listItems, Set<Asset> assets) {
+    for (Asset a : listItems.getRows()) {
+      if (!a.isFolder()) {
+        boolean added = assets.add(a);
+      }
     }
   }
 }

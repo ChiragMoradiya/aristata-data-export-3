@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import com.dw.aristata.export3.dto.AssetListItems;
 import com.dw.aristata.export3.dto.FamilyListItems;
 import com.dw.aristata.export3.dto.ListCollectionResult;
 import com.dw.aristata.export3.dto.ListDef;
@@ -57,6 +58,10 @@ public class XMLParser {
   
   public static TaxDocumentListItems parseTaxDocuments(String fileLoc) {
     return parseXML(fileLoc, "//listitems", TaxDocumentListItems.class);
+  }
+  
+  public static AssetListItems parseAssets(String fileLoc) {
+    return parseXML(fileLoc, "//listitems", AssetListItems.class);
   }
 
 }
